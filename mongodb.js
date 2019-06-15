@@ -27,109 +27,147 @@ MongoClient.connect(
 
     const db = client.db(databaseName);
 
-    // Reading documents
-    // db.collection("users").findOne(
-    //   { _id: new ObjectID("5d03b63669a5551c80a2604a") },
-    //   (error, user) => {
-    //     if (error) {
-    //       return console.log("Unable find document");
+    // Updating documents
+    // db.collection("users")
+    //   .updateOne(
+    //     {
+    //       _id: new ObjectID("5d03b63669a5551c80a2604a")
+    //     },
+    //     {
+    //       $inc: {
+    //         age: 1
+    //       }
+    //       // $set: {
+    //       //   name: "Mike"
+    //       // }
     //     }
-    //     console.log(user);
-    //   }
-    // );
+    //   )
+    //   .then(result => {
+    //     console.log(result);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
 
-    db.collection("tasks").findOne(
-      { _id: new ObjectID("5d03ba3a0bb6251cd944606a") },
-      (error, task) => {
-        if (error) {
-          return console.log("Unable find document");
+    db.collection("tasks")
+      .updateMany(
+        { completed: false },
+        {
+          $set: {
+            completed: true
+          }
         }
-        console.log(task);
-      }
-    );
-
-    // db.collection("users")
-    //   .find({ age: 47 })
-    //   .toArray((error, users) => {
-    //     console.log(users);
-    //   });
-
-    // db.collection("users")
-    //   .find({ age: 47 })
-    //   .count((error, count) => {
-    //     console.log(count);
-    //   });
-
-    db.collection("tasks")
-      .find({ completed: false })
-      .toArray((error, tasks) => {
-        console.log(tasks);
+      )
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
       });
-
-    db.collection("tasks")
-      .find({ completed: false })
-      .count((error, tasks) => {
-        console.log(tasks);
-      });
-
-    // Creating documents
-    // db.collection("users").insertOne(
-    //   {
-    //     _id: id,
-    //     name: "Ruth",
-    //     age: 47
-    //   },
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Unable to insert user");
-    //     }
-
-    //     console.log(result.ops);
-    //   }
-    // );
-
-    // db.collection("users").insertMany(
-    //   [
-    //     {
-    //       name: "Matthew",
-    //       age: 9
-    //     },
-    //     {
-    //       name: "Lucy",
-    //       age: 7
-    //     }
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Unable to insert documents");
-    //     }
-
-    //     console.log(result.ops);
-    //   }
-    // );
-
-    // db.collection("tasks").insertMany(
-    //   [
-    //     {
-    //       description: "Walk the dog",
-    //       completed: true
-    //     },
-    //     {
-    //       description: "Feed the cat",
-    //       completed: false
-    //     },
-    //     {
-    //       description: "Wash the dishes",
-    //       completed: false
-    //     }
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Unable to insert tasks");
-    //     }
-
-    //     console.log(result.ops);
-    //   }
-    // );
   }
 );
+
+// Reading documents
+// db.collection("users").findOne(
+//   { _id: new ObjectID("5d03b63669a5551c80a2604a") },
+//   (error, user) => {
+//     if (error) {
+//       return console.log("Unable find document");
+//     }
+//     console.log(user);
+//   }
+// );
+
+// db.collection("tasks").findOne(
+//   { _id: new ObjectID("5d03ba3a0bb6251cd944606a") },
+//   (error, task) => {
+//     if (error) {
+//       return console.log("Unable find document");
+//     }
+//     console.log(task);
+//   }
+// );
+
+// db.collection("users")
+//   .find({ age: 47 })
+//   .toArray((error, users) => {
+//     console.log(users);
+//   });
+
+// db.collection("users")
+//   .find({ age: 47 })
+//   .count((error, count) => {
+//     console.log(count);
+//   });
+
+// db.collection("tasks")
+//   .find({ completed: false })
+//   .toArray((error, tasks) => {
+//     console.log(tasks);
+//   });
+
+// db.collection("tasks")
+//   .find({ completed: false })
+//   .count((error, tasks) => {
+//     console.log(tasks);
+//   });
+
+// Creating documents
+// db.collection("users").insertOne(
+//   {
+//     _id: id,
+//     name: "Ruth",
+//     age: 47
+//   },
+//   (error, result) => {
+//     if (error) {
+//       return console.log("Unable to insert user");
+//     }
+
+//     console.log(result.ops);
+//   }
+// );
+
+// db.collection("users").insertMany(
+//   [
+//     {
+//       name: "Matthew",
+//       age: 9
+//     },
+//     {
+//       name: "Lucy",
+//       age: 7
+//     }
+//   ],
+//   (error, result) => {
+//     if (error) {
+//       return console.log("Unable to insert documents");
+//     }
+
+//     console.log(result.ops);
+//   }
+// );
+
+// db.collection("tasks").insertMany(
+//   [
+//     {
+//       description: "Walk the dog",
+//       completed: true
+//     },
+//     {
+//       description: "Feed the cat",
+//       completed: false
+//     },
+//     {
+//       description: "Wash the dishes",
+//       completed: false
+//     }
+//   ],
+//   (error, result) => {
+//     if (error) {
+//       return console.log("Unable to insert tasks");
+//     }
+
+//     console.log(result.ops);
+//   }
+// );
