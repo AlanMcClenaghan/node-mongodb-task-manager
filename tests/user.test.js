@@ -28,7 +28,7 @@ test("Should signup a new user", async () => {
     token: user.tokens[0].token
   });
 
-  // Assert that password is not return in plain text
+  // Assert that password is not returned in plain text
   expect(user.password).not.toBe("MyPass777!");
 });
 
@@ -129,4 +129,48 @@ test("Should NOT update invalid user fields", async () => {
       location: "London"
     })
     .expect(400);
+});
+
+//
+// User Test Ideas
+//
+// Should not signup user with invalid name/email/password
+// Should not update user if unauthenticated
+// Should not update user with invalid name/email/password
+// Should not delete user if unauthenticated
+
+test("Should NOT signup user with invalid name", async () => {
+  const response = await request(app)
+    .post("/users")
+    .send({
+      name: "",
+      email: "andrew@example.com",
+      password: "MyPass777!"
+    })
+    .expect(400);
+  // console.log(response.body.user);
+});
+
+test("Should NOT signup user with invalid email", async () => {
+  const response = await request(app)
+    .post("/users")
+    .send({
+      name: "Andrew",
+      email: "",
+      password: "MyPass777!"
+    })
+    .expect(400);
+  // console.log(response.body.user);
+});
+
+test("Should NOT signup user with invalid password", async () => {
+  const response = await request(app)
+    .post("/users")
+    .send({
+      name: "Andrew",
+      email: "andrew@example.com",
+      password: ""
+    })
+    .expect(400);
+  // console.log(response.body.user);
 });
