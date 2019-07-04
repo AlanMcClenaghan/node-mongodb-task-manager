@@ -156,7 +156,7 @@ test("Should NOT signup user with invalid email", async () => {
     .post("/users")
     .send({
       name: "Andrew",
-      email: "",
+      email: "aaa",
       password: "MyPass777!"
     })
     .expect(400);
@@ -173,4 +173,56 @@ test("Should NOT signup user with invalid password", async () => {
     })
     .expect(400);
   // console.log(response.body.user);
+});
+
+test("Should NOT update user if unauthenticated", async () => {
+  const response = await request(app)
+    .patch("/users/me/")
+    // .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      name: "Jess"
+    })
+    .expect(401);
+
+  // Assert that user has NOT been updated
+  const user = await User.findById(userOneId);
+  expect(user.name).not.toEqual("Jess");
+});
+
+test("Should NOT update user with invalid name", async () => {
+  const response = await request(app)
+    .patch("/users/me/")
+    .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      name: ""
+    })
+    .expect(400);
+
+  // Assert that user has NOT been updated
+  const user = await User.findById(userOneId);
+  expect(user.name).not.toEqual("");
+});
+
+test("Should NOT update user with invalid email", async () => {
+  const response = await request(app)
+    .patch("/users/me/")
+    .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      email: ""
+    })
+    .expect(400);
+
+  // Assert that user has NOT been updated
+  const user = await User.findById(userOneId);
+  expect(user.email).not.toEqual("");
+});
+
+test("Should NOT update user with invalid password", async () => {
+  const response = await request(app)
+    .patch("/users/me/")
+    .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      password: ""
+    })
+    .expect(400);
 });
